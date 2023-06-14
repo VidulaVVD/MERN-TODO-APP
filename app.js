@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 
 import Connection from './database/db.js';
 import Routes from './routes/todoRoute.js';
-import path from 'path';
+
 
 const app = express();
 
@@ -13,13 +13,15 @@ app.use(cors());
 
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(express.static(path.join(__dirname, './todo/build')))
+
+app.get("/",(req,res) => {
+    res.setHeader("Access-Control-Allow-Credentials","true");
+    res.send("API is running");
+});
 
 app.use('/', Routes);
 
-app.use("*", function(req,res){
-    res.sendFile(path.join(__dirname, "./todo/build/index.html"))
-});
+
 
 const PORT = 8000;
 
